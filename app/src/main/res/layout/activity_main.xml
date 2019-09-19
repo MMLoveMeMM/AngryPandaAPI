@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="req"/>
+
+    <Button
+        android:id="@+id/button0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="req0"/>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="req1"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="xi1"/>
+
+    <Button
+    android:id="@+id/button3"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="category"/>
+
+    <Button
+        android:id="@+id/tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tag"/>
+
+    <Button
+        android:id="@+id/album"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="album"/>
+
+    <Button
+        android:id="@+id/albumbrowse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="albumbrowse"/>
+
+    <Button
+    android:id="@+id/albumbatch"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="albumbatch"/>
+
+    <Button
+        android:id="@+id/albumupdatebatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="albumupdatebatch"/>
+
+    <Button
+        android:id="@+id/tracksbatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tracksbatch"/>
+
+    <Button
+        android:id="@+id/trackslast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="trackslast"/>
+
+    <Button
+        android:id="@+id/metalist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="metalist"/>
+
+    <Button
+        android:id="@+id/metaalbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="metaalbum"/>
+
+    <Button
+        android:id="@+id/ranklist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ranklist"/>
+
+    <Button
+        android:id="@+id/rankalbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="rankalbum"/>
+
+    <Button
+        android:id="@+id/columbatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="columbatch"/>
+
+    <Button
+        android:id="@+id/columbrowse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="columbrowse"/>
+
+    <Button
+        android:id="@+id/banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="banner"/>
+
+    <Button
+        android:id="@+id/searchalbum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="searchalbum"/>
+
+    <Button
+        android:id="@+id/searchtracks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="searchtracks"/>
+
+    <Button
+        android:id="@+id/searchalbumv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="searchalbumv2"/>
+
+    <Button
+        android:id="@+id/searchtracksv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="searchtracksv2"/>
+
+    <Button
+        android:id="@+id/hotword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hotword"/>
+
+    <Button
+        android:id="@+id/sugword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sugword"/>
+
+</LinearLayout>
