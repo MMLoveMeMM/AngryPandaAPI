@@ -15,10 +15,7 @@ import java.net.SocketTimeoutException;
 import java.util.HashMap;
 
 import pumpkin.org.angrypandaretrofit.media.IDPadPlayer;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.functions.Action1;
-import rx.subscriptions.CompositeSubscription;
+
 import ximalayaos.net.RetrofitManager;
 import ximalayaos.net.XiMaLayaOsWrapper;
 import ximalayaos.net.model.BaseResult;
@@ -86,14 +83,14 @@ public class MainActivity extends AppCompatActivity {
     private Button mHotWordBtn;
     private Button mSugBtn;
 
-    public CompositeSubscription mCompositeSubscription;
+    //public CompositeSubscription mCompositeSubscription;
     final XiMaLayaOsWrapper wrapper = new XiMaLayaOsWrapper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mCompositeSubscription = new CompositeSubscription();
+        // mCompositeSubscription = new CompositeSubscription();
 
         mSugBtn = (Button)findViewById(R.id.sugword);
         mSugBtn.setOnClickListener(new View.OnClickListener() {
@@ -770,7 +767,7 @@ public class MainActivity extends AppCompatActivity {
                 hashMap.put("type", "top");
                 hashMap.put("key", "6cf780f700fb7211695fc721665194ab");
 
-                Subscription subscription = wrapper.getJuHeInfoStr(hashMap/*jsonObject*/)
+                /*Subscription subscription = wrapper.getJuHeInfoStr(hashMap*//*jsonObject*//*)
                         .subscribe(xiMaLayaOsSubscriber(new Action1<JuHeNewsStr>() {
                             @Override
                             public void call(JuHeNewsStr o) {
@@ -779,7 +776,7 @@ public class MainActivity extends AppCompatActivity {
                                 // goNext(o);
                             }
                         }, null));
-                mCompositeSubscription.add(subscription);
+                mCompositeSubscription.add(subscription);*/
             }
         });
 
@@ -808,12 +805,12 @@ public class MainActivity extends AppCompatActivity {
         mBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put("word", stringToUnicode("自相矛盾")/*"%E8%87%AA%E7%9B%B8%E7%9F%9B%E7%9B%BE&d"*/);
+                /*HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("word", stringToUnicode("自相矛盾")*//*"%E8%87%AA%E7%9B%B8%E7%9F%9B%E7%9B%BE&d"*//*);
                 hashMap.put("dtype", "json");
                 hashMap.put("key", "156d4911fdfa828aded330d6b45897aa");
 
-                Subscription subscription = wrapper.getChengYuInfo(hashMap/*jsonObject*/)
+                Subscription subscription = wrapper.getChengYuInfo(hashMap*//*jsonObject*//*)
                         .subscribe(xiMaLayaOsSubscriber(new Action1<JuHeChengYu>() {
                             @Override
                             public void call(JuHeChengYu o) {
@@ -822,7 +819,7 @@ public class MainActivity extends AppCompatActivity {
                                 // goNext(o);
                             }
                         }, null));
-                mCompositeSubscription.add(subscription);
+                mCompositeSubscription.add(subscription);*/
             }
         });
 
@@ -830,13 +827,13 @@ public class MainActivity extends AppCompatActivity {
         mBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONObject jsonObject = JsonParamsBuild.buildJuHeNews("top", "6cf780f700fb7211695fc721665194ab");
+                /*JSONObject jsonObject = JsonParamsBuild.buildJuHeNews("top", "6cf780f700fb7211695fc721665194ab");
 
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("type", "top");
                 hashMap.put("key", "6cf780f700fb7211695fc721665194ab");
 
-                Subscription subscription = wrapper.getJuHeInfo(hashMap/*jsonObject*/)
+                Subscription subscription = wrapper.getJuHeInfo(hashMap*//*jsonObject*//*)
                         .subscribe(xiMaLayaOsSubscriber(new Action1<JuHeNews>() {
                             @Override
                             public void call(JuHeNews o) {
@@ -844,7 +841,7 @@ public class MainActivity extends AppCompatActivity {
                                 goNext(o);
                             }
                         }, null));
-                mCompositeSubscription.add(subscription);
+                mCompositeSubscription.add(subscription);*/
             }
         });
     }
@@ -866,49 +863,6 @@ public class MainActivity extends AppCompatActivity {
         Log.e("liuzhibao", body);
     }
 
-    /**
-     * 创建观察者
-     *
-     * @param onNext
-     * @param <T>
-     * @return
-     */
-    public <T> Subscriber xiMaLayaOsSubscriber(final Action1<? super T> onNext, final OnCompletedListenter listenter) {
-        return new Subscriber<T>() {
-
-            @Override
-            public void onCompleted() {
-                // hideLoadingDialog();
-                if (listenter != null) {
-                    listenter.onCompleted();
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                if (e instanceof RetrofitManager.HttpException) {
-                    RetrofitManager.HttpException exception = (RetrofitManager.HttpException) e;
-                    showToast(exception.message);
-                } else if (e instanceof SocketTimeoutException) {
-                    showToast(e.getMessage());
-                } else if (e instanceof ConnectException) {
-                    showToast(e.getMessage());
-                }
-                // Logutil.e(TAG, String.valueOf(e.getMessage()), e);
-                if (listenter != null) {
-                    listenter.onError();
-                }
-                // hideLoadingDialog();
-            }
-
-            @Override
-            public void onNext(T t) {
-                if (!mCompositeSubscription.isUnsubscribed()) {
-                    onNext.call(t);
-                }
-            }
-        };
-    }
 
     public void showToast(String info) {
         Toast.makeText(getApplicationContext(), info, Toast.LENGTH_SHORT).show();
