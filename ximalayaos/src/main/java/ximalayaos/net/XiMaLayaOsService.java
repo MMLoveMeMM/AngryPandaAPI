@@ -9,10 +9,6 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
-import rx.Observable;
-import ximalayaos.net.model.JuHeChengYu;
-import ximalayaos.net.model.JuHeNews;
-import ximalayaos.net.model.JuHeNewsStr;
 
 /**
  * @author: zhibao.Liu
@@ -28,14 +24,6 @@ public interface XiMaLayaOsService {
      * */
     @POST("/toutiao/index")
     //  此处回调返回的可为任意类型Call<T>，再也不用自己去解析json数据啦！！！
-    Observable<JuHeNews> getJuHeMessage(@Body RequestBody body/*@Query("type") String type, @Query("key") String key*/);
-
-    @POST("/toutiao/index")
-    Observable<JuHeNewsStr> getJuHeMessageStr(@Body RequestBody body);
-
-    @POST("/chengyu/query")
-    Observable<JuHeChengYu> getChengYuMessage(@Body RequestBody body/*@Query("type") String type, @Query("key") String key*/);
-
     /**
      * 喜马拉雅接口
      */

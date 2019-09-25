@@ -60,7 +60,7 @@ public class MetadataAblumsRequest {
             call = RetrofitManager.getService().getMetadataAblums(paramsMap);
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(Response<ResponseBody> response) {
+                public void onResponse(Call<ResponseBody> call,Response<ResponseBody> response) {
                     //主线程
                     try {
                         if (response != null && response.body() != null) {
@@ -92,7 +92,7 @@ public class MetadataAblumsRequest {
                 }
 
                 @Override
-                public void onFailure(Throwable t) {
+                public void onFailure(Call<ResponseBody> call,Throwable t) {
                     Log.e(TAG, "Throwable---->" + t.getMessage());
                 }
             });

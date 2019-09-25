@@ -10,14 +10,17 @@ import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
-import retrofit2.GsonConverterFactory;
+/*import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
 import retrofit2.RxJavaCallAdapterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import rx.schedulers.Schedulers;*/
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import ximalayaos.net.model.BaseResult;
 
 /**
@@ -72,81 +75,12 @@ public class RetrofitManager {
                     .client(client)
                     .baseUrl(API_HOST)
                     .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
         }
         return retrofit;
     }
 
-    /**
-     * 对网络接口返回的Response进行分割操作
-     *
-     * @param response
-     * @param <T>
-     * @return
-     */
-    public <T> Observable<Object> flatResponse(final BaseResult response) {
-        return Observable.create(new Observable.OnSubscribe<Object>() {
-
-            @Override
-            public void call(Subscriber<? super Object> subscriber) {
-                /*if (response.getError_code() == 0) {
-                    if (!subscriber.isUnsubscribed()) {
-                        subscriber.onNext(response);
-                    }
-                } else {
-                    if (!subscriber.isUnsubscribed()) {
-                        subscriber.onError(new HttpException(response.getError_code(), response.getReason()));
-                    }
-                    return;
-                }*/
-                if (!subscriber.isUnsubscribed()) {
-                    subscriber.onNext(response);
-                }
-
-                if (!subscriber.isUnsubscribed()) {
-                    subscriber.onCompleted();
-                }
-
-            }
-        });
-    }
-
-
-
-    public static class HttpException extends Exception {
-        public int code;
-        public String message;
-
-        public HttpException(int resultcode, String reason) {
-            this.code = resultcode;
-            this.message = reason;
-        }
-
-        @Override
-        public String getMessage() {
-            return message;
-        }
-    }
-
-    protected <T> Observable.Transformer<BaseResult, T> applySchedulers() {
-        return (Observable.Transformer<BaseResult, T>) transformer;
-    }
-
-
-    final Observable.Transformer transformer = new Observable.Transformer() {
-        @Override
-        public Object call(Object observable) {
-            return ((Observable) observable).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .flatMap(new Func1<BaseResult, Object>() {
-                        @Override
-                        public Object call(BaseResult response) {
-                            return flatResponse((response));
-                        }
-                    });
-        }
-    };
 
     /**
      * 当{@link }中接口的注解为{@link retrofit2.http.Multipart}时，参数为{@link RequestBody}

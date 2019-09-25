@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // mCompositeSubscription = new CompositeSubscription();
 
+        setmSearchAlbumV2Btn();
+
         mSugBtn = (Button)findViewById(R.id.sugword);
         mSugBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,49 +247,7 @@ public class MainActivity extends AppCompatActivity {
         mSearchAlbumBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchAlbumRequest.httpSearchAlbumRequest(getApplicationContext(), "刘德华", new IRequest() {
-                    @Override
-                    public void callBackRequestResult(String rawJson) {
-
-                    }
-
-                    @Override
-                    public void callBackRequestBean(BaseResult result) {
-
-                        // 通过搜素专辑,得到专辑的ID
-                        // 通过专辑的ID,获取专辑ID详细信息
-                        SearchAlbumBean searchAlbumBean = (SearchAlbumBean) result;
-
-                        XiVodAPIManager.getInstance().httpAlbumBrowseRequest(getApplicationContext(),
-                                (int) searchAlbumBean.getAlbums().get(0).getId(), new IRequest() {
-                                    @Override
-                                    public void callBackRequestResult(String rawJson) {
-
-                                    }
-
-                                    @Override
-                                    public void callBackRequestBean(BaseResult result) {
-
-                                        AlbumsBrowseBean albumsBrowseBean = (AlbumsBrowseBean) result;
-                                        String url = albumsBrowseBean.getTracks().get(0).getPlay_url_32();
-
-                                        IDPadPlayer.builder(getApplicationContext()).play(url);
-
-                                    }
-
-                                    @Override
-                                    public void callBackRequestError(String rawJson) {
-
-                                    }
-                                });
-
-                    }
-
-                    @Override
-                    public void callBackRequestError(String rawJson) {
-
-                    }
-                });
+                setmSearchAlbumV2Btn();
             }
         });
 
@@ -895,6 +855,53 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    private void setmSearchAlbumV2Btn(){
+        SearchAlbumRequest.httpSearchAlbumRequest(getApplicationContext(), "刘德华", new IRequest() {
+            @Override
+            public void callBackRequestResult(String rawJson) {
+
+            }
+
+            @Override
+            public void callBackRequestBean(BaseResult result) {
+
+                // 通过搜素专辑,得到专辑的ID
+                // 通过专辑的ID,获取专辑ID详细信息
+                SearchAlbumBean searchAlbumBean = (SearchAlbumBean) result;
+
+                XiVodAPIManager.getInstance().httpAlbumBrowseRequest(getApplicationContext(),
+                        (int) searchAlbumBean.getAlbums().get(0).getId(), new IRequest() {
+                            @Override
+                            public void callBackRequestResult(String rawJson) {
+
+                            }
+
+                            @Override
+                            public void callBackRequestBean(BaseResult result) {
+
+                                AlbumsBrowseBean albumsBrowseBean = (AlbumsBrowseBean) result;
+                                String url = albumsBrowseBean.getTracks().get(0).getPlay_url_32();
+
+                                IDPadPlayer.builder(getApplicationContext()).play(url);
+
+                            }
+
+                            @Override
+                            public void callBackRequestError(String rawJson) {
+
+                            }
+                        });
+
+            }
+
+            @Override
+            public void callBackRequestError(String rawJson) {
+
+            }
+        });
     }
 
 }

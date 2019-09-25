@@ -13,8 +13,7 @@ import retrofit2.http.HEAD;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
-import rx.Observable;
-import ximalayaos.net.model.JuHeChengYu;
+
 
 /**
  * @ProjectName: AngryPandaRetrofit
