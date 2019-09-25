@@ -1,1 +1,2 @@
-include ':app', ':ximalayaos'
+include ':app', ':1a-ximalayaos'
+project(':1a-ximalayaos').projectDir = new File('ximalayaos')
