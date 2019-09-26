@@ -8,28 +8,23 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import org.json.JSONObject;
+import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 import java.io.UnsupportedEncodingException;
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 import java.util.HashMap;
 
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
+import io.reactivex.FlowableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import pumpkin.org.angrypandaretrofit.media.IDPadPlayer;
 
-import pumpkin.org.juhe.net.JuheRetrofitManager;
 import pumpkin.org.juhe.net.JuheWrapper;
-import ximalayaos.net.RetrofitManager;
 import ximalayaos.net.XiMaLayaOsWrapper;
 import ximalayaos.net.model.BaseResult;
-import ximalayaos.net.model.JuHeChengYu;
 import ximalayaos.net.model.JuHeNews;
-import ximalayaos.net.model.JuHeNewsStr;
 import ximalayaos.net.model.albbrowse.AlbumsBrowseBean;
 import ximalayaos.net.model.searchalbum.SearchAlbumBean;
 import ximalayaos.net.model.tag.TagsList;
@@ -805,6 +800,13 @@ public class MainActivity extends AppCompatActivity {
 
                 observable.subscribeOn(Schedulers.io()) // 订阅者要在主线程执行
                         .observeOn(AndroidSchedulers.mainThread())
+                        // 切换线程
+                        .compose(new FlowableTransformer<pumpkin.org.juhe.net.model.JuHeNews, pumpkin.org.juhe.net.model.JuHeNews>() {
+                            @Override
+                            public Publisher<pumpkin.org.juhe.net.model.JuHeNews> apply(Flowable<pumpkin.org.juhe.net.model.JuHeNews> upstream) {
+                                return upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+                            }
+                        })
                         .subscribe(new Subscriber<pumpkin.org.juhe.net.model.JuHeNews>() {
                             @Override
                             public void onSubscribe(Subscription s) {
