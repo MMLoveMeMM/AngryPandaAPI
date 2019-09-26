@@ -8,14 +8,22 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import org.json.JSONObject;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.HashMap;
 
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import pumpkin.org.angrypandaretrofit.media.IDPadPlayer;
 
+import pumpkin.org.juhe.net.JuheRetrofitManager;
+import pumpkin.org.juhe.net.JuheWrapper;
 import ximalayaos.net.RetrofitManager;
 import ximalayaos.net.XiMaLayaOsWrapper;
 import ximalayaos.net.model.BaseResult;
@@ -115,22 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-                /*SearchSuggestWordsRequest.httpSearchSuggestWordsRequest(getApplicationContext(), "中国", new IRequest() {
-                    @Override
-                    public void callBackRequestResult(String rawJson) {
 
-                    }
-
-                    @Override
-                    public void callBackRequestBean(BaseResult result) {
-
-                    }
-
-                    @Override
-                    public void callBackRequestError(String rawJson) {
-
-                    }
-                });*/
             }
         });
 
@@ -802,6 +795,41 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }, null));
                 mCompositeSubscription.add(subscription);*/
+                JSONObject jsonObject = JsonParamsBuild.buildJuHeNews("top", "6cf780f700fb7211695fc721665194ab");
+
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("type", "top");
+                hashMap.put("key", "6cf780f700fb7211695fc721665194ab");
+                JuheWrapper wrapper = new JuheWrapper();
+                Flowable<pumpkin.org.juhe.net.model.JuHeNews> observable = wrapper.getJuHeInfo(hashMap);
+
+                observable.subscribeOn(Schedulers.io()) // 订阅者要在主线程执行
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<pumpkin.org.juhe.net.model.JuHeNews>() {
+                            @Override
+                            public void onSubscribe(Subscription s) {
+                                s.request(Long.MAX_VALUE);
+                            }
+
+                            @Override
+                            public void onNext(pumpkin.org.juhe.net.model.JuHeNews juHeNews) {
+                                if(juHeNews!=null){
+                                    String news = juHeNews.getResult().getData().get(0).getTitle();
+                                    Log.e(TAG,"juhe news title : "+news);
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable t) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
+
             }
         });
     }
