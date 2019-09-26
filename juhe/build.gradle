@@ -37,7 +37,10 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta3'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'*/
-
+    /*
+    * 使用下面的库是为了保持和喜马拉雅那边的库保持一致
+    * 防止出现由于版本出现库冲突
+    * */
     api 'com.squareup.retrofit2:retrofit:2.4.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     api 'com.squareup.retrofit2:converter-gson:2.4.0'
